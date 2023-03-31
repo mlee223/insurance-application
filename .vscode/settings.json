@@ -1,0 +1,45 @@
+{
+  "files.exclude": {
+    "**/build": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/*.tsbuildinfo": true
+  },
+  "search.exclude": {
+    "**/.git/**": true,
+    "**/bower_components": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "/node_modules/**": true,
+    "node_modules/**": true,
+    "**/**.svg": true,
+    "**/**.lock": true
+  },
+  "files.watcherExclude": {
+    "**/build/**": true,
+    "**/bower_components": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/node_modules": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "editor.formatOnSave": true
+}

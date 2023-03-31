@@ -1,6 +1,6 @@
 import Vehicle from "./Vehicle";
 
-export default interface IApplicationData {
+export interface IApplicationData {
   id?: any | null;
   firstName: string;
   lastName: string;

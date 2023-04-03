@@ -4,18 +4,13 @@ import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AddApplication from "./pages/AddApplication";
 import Application from "./pages/Application";
-import ApplicationsList from "./pages/ApplicationsList";
 import { DataStore } from "./data/global/store";
 
 const AppRouter: React.FC = () => {
   return (
     <div className="container mt-3">
       <Routes>
-        <Route path="/" element={<ApplicationsList />} />
-        <Route path="/applications" element={<ApplicationsList />} />
-        <Route path="/add" element={<AddApplication />} />
         <Route path="/applications/:id" element={<Application />} />
       </Routes>
     </div>

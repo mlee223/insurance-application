@@ -20,6 +20,5 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.application = require("./application.model.js")(sequelize, Sequelize);
-db.vehicle = require("./vehicle.model.js")(sequelize, Sequelize);
 
 module.exports = db;

@@ -48,7 +48,7 @@
 }
 
 .submit-form {
-  max-width: 300px;
+  /* max-width: 300px; */
   margin: auto;
 }
 
@@ -57,7 +57,33 @@
   margin: auto;
 }
 
-.form-control,
+.form-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-element,
 .btn {
-  margin-bottom: 10px;
+  max-width: 300px;
+  margin-right: 20px;
+  /* margin-bottom: 10px; */
+}
+
+.form-error {
+  height: 20px;
+  font-size: small;
+  color: red;
+}
+
+.form-message {
+  color: green;
+}
+
+input[type="submit"] {
+  padding: 5px 15px;
+  background: #ccc;
+  border: 0 none;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }

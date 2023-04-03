@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
     address: {
       type: Sequelize.STRING,
     },
+    vehicles: {
+      type: Sequelize.STRING,
+    },
   });
 
   return InsuranceApplication;

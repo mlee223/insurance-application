@@ -7,7 +7,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.firstName || !req.body.lastName) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "Name can not be empty!",
     });
     return;
   }
@@ -18,7 +18,7 @@ exports.create = (req, res) => {
     lastName: req.body.lastName,
     birthDate: req.body.birthDate,
     address: JSON.stringify(req.body.address),
-    vehicle: JSON.stringify(req.body.vehicle),
+    vehicles: JSON.stringify(req.body.vehicles),
   };
 
   // Save application in the database
@@ -60,7 +60,15 @@ exports.findOne = (req, res) => {
   Application.findByPk(id)
     .then((data) => {
       if (data) {
-        res.send(data);
+        const application = {
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          birthDate: data.birthDate,
+          address: JSON.parse(data.address),
+          vehicles: JSON.parse(data.vehicles),
+        };
+        res.send(application);
       } else {
         res.status(404).send({
           message: `Cannot find Insurance Application with id=${id}.`,
@@ -78,7 +86,15 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Application.update(req.body, {
+  const application = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    birthDate: req.body.birthDate,
+    address: JSON.stringify(req.body.address),
+    vehicles: JSON.stringify(req.body.vehicles),
+  };
+
+  Application.update(application, {
     where: { id: id },
   })
     .then((num) => {

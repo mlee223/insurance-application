@@ -1,34 +1,32 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
+import { UseFormRegister } from "react-hook-form";
 
 interface ICustomTextInputProps {
-  id: string;
+  type?: string;
   label: string;
   name: string;
-  value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  required: boolean;
+  error?: string;
+  register: UseFormRegister<any>;
 }
 
-const CustomTextInput: React.FC<ICustomTextInputProps> = ({
-  id,
+export const CustomTextInput: React.FC<ICustomTextInputProps> = ({
+  type,
   label,
   name,
-  value,
-  onChange,
+  required,
+  error,
+  register,
 }) => {
   return (
-    <div className="form-group">
-      <label htmlFor={name}>{label}</label>
+    <div className="form-element">
+      <label>{`${label}${required ? "*" : ""}`}</label>
       <input
-        type="text"
         className="form-control"
-        id={id}
-        required
-        value={value}
-        onChange={onChange}
-        name={name}
+        type={type}
+        {...register(name, { required })}
       />
+      <p className="form-error">{error || ""}</p>
     </div>
   );
 };
-
-export default CustomTextInput;

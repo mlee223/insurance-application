@@ -1,3 +1,4 @@
+export * from "./Address";
 export * from "./Application";
-export * from "./State";
+export * from "./ReduxStore";
 export * from "./Vehicle";

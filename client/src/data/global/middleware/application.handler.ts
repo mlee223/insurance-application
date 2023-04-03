@@ -1,7 +1,7 @@
 import { Dispatch, Middleware } from "redux";
 import { getType } from "typesafe-actions";
 import { ApiProvider } from "../../api";
-import { IRootState } from "../../../types";
+import { IApplicationData, IRootState } from "../../../types";
 import { TRootAction, ApplicationActions } from "../actions";
 
 const tryLoadApplication = async (
@@ -23,6 +23,24 @@ const tryLoadApplication = async (
   }
 };
 
+const tryUpdateApplication = async (
+  state: IRootState,
+  dispatch: Dispatch<TRootAction>,
+  data: IApplicationData
+) => {
+  const api = ApiProvider(state, dispatch);
+
+  if (api) {
+    const response = await api.updateApplication(data);
+    if (response.success) {
+      dispatch(ApplicationActions.applicationUpdated());
+    } else {
+    }
+  } else {
+    console.warn("not updating application");
+  }
+};
+
 export const ApplicationMiddleware: Middleware<
   Dispatch<TRootAction>,
   IRootState,
@@ -38,6 +56,10 @@ export const ApplicationMiddleware: Middleware<
       switch (action.type) {
         case getType(ApplicationActions.getApplication): {
           tryLoadApplication(prevState, dispatch, action.payload.id);
+          break;
+        }
+        case getType(ApplicationActions.updateApplication): {
+          tryUpdateApplication(prevState, dispatch, action.payload.data);
           break;
         }
       }

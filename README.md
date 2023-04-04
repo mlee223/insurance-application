@@ -7,7 +7,7 @@ Customers often start the insurance application process on an external third par
 
 ## Installation and Getting Started
 
-### [Server Setup](https://github.com/mlee223/insurance-application/server)
+### [Server Setup](https://github.com/mlee223/insurance-application/tree/main/server)
 
 Use the package manager [yarn](https://yarnpkg.com) or an equivalent to install dependencies.
 
@@ -116,7 +116,7 @@ The endpoint returns a redirect URL that points to the frontend URL to load the 
 
 Copy and past the URL in web browser to continue the application process.
 
-### [React Frontend](https://github.com/mlee223/insurance-application/client)
+### [React Frontend](https://github.com/mlee223/insurance-application/tree/main/client)
 
 In the `client` folder, run `yarn install` and `yarn start` to run the React application on http://localhost:8081/.
 

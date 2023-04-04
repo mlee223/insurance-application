@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { parse, isDate } from "date-fns";
 import { DateConstant, NumberConstant } from "../../constants";
 
 const patternAlpha = /^[a-zA-Z\s]*$/;
@@ -16,10 +17,20 @@ const dateValidator = (
   max: string,
   maxMsg: string
 ) =>
-  yup.date().typeError("Must be a date type").min(min, minMsg).max(max, maxMsg);
+  yup
+    .date()
+    .transform((_, originalValue) =>
+      isDate(originalValue)
+        ? originalValue
+        : parse(originalValue, "yyyy-MM-dd", new Date())
+    )
+    .min(min, minMsg)
+    .max(max, maxMsg);
 
 const NAME_L_MIN_MSG = `Must be at least ${NumberConstant.NAME_L_MIN} characters`;
 const NAME_L_MAX_MSG = `Must be at most ${NumberConstant.NAME_L_MAX} characters`;
+const VEHICLE_MIN_MSG = `Must be later than ${DateConstant.VEHICLE_MIN.year}`;
+const VEHICLE_MAX_MSG = `Must be at earlier than ${DateConstant.VEHICLE_MAX.year}`;
 
 export const ApplicationValidationSchema = yup.object().shape({
   firstName: stringValidator(patternAlpha, "Must include only letter")
@@ -34,9 +45,9 @@ export const ApplicationValidationSchema = yup.object().shape({
 
   birthDate: dateValidator(
     DateConstant.DOB_MIN.toISODate(),
-    "Must be older than 16",
+    "",
     DateConstant.DOB_MAX.toISODate(),
-    ""
+    "Must be older than 16"
   ),
 
   address: yup.object().shape({
@@ -62,12 +73,21 @@ export const ApplicationValidationSchema = yup.object().shape({
           "Enter a valid VIN number"
         ),
 
-        year: dateValidator(
-          DateConstant.VEHICLE_MIN.toISODate(),
-          `Must be later than ${DateConstant.VEHICLE_MIN.year}`,
-          DateConstant.VEHICLE_MAX.toISODate(),
-          `Must be at earlier than ${DateConstant.VEHICLE_MAX.year}`
-        ).required("Enter a valid year"),
+        // year: dateValidator(
+        //   DateConstant.VEHICLE_MIN.toISODate(),
+        //   VEHICLE_MIN_MSG,
+        //   DateConstant.VEHICLE_MAX.toISODate(),
+        //   VEHICLE_MAX_MSG
+        // ).required("Enter a valid year"),
+        year: yup
+          .number()
+          .typeError("Invalid data")
+          .test("len", "Must be exactly 4 characters", (val) =>
+            val ? val.toString().length === 4 : false
+          )
+          .min(DateConstant.VEHICLE_MIN.year, VEHICLE_MIN_MSG)
+          .max(DateConstant.VEHICLE_MAX.year, VEHICLE_MAX_MSG)
+          .required("Enter a valid year"),
 
         model: stringValidator(
           patternAlphabet,

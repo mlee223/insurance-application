@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { IApplicationData, IRootState } from "../../types";
-import { TRootAction } from "../global/actions";
+import { ApplicationActions, TRootAction } from "../global/actions";
 import { ApiClient } from "./ApiClient";
 
 const httpOptions = {
@@ -22,10 +22,8 @@ export function Api(api: ApiClient) {
     ): Promise<{ success: boolean }> => {
       return api.put(`/applications/${data.id}`, data, httpOptions);
     },
-    validateApplication: async (
-      data: IApplicationData
-    ): Promise<{ price: number }> => {
-      return api.post(`/applications/${data.id}`, {}, httpOptions);
+    validateApplication: async (id: string): Promise<{ price: number }> => {
+      return api.post(`/applications/${id}/validate`, {}, httpOptions);
     },
   };
 }
@@ -33,7 +31,7 @@ export function Api(api: ApiClient) {
 export const ApiProvider = (
   state: IRootState,
   dispatch: Dispatch<TRootAction>,
-  errAction?: (error: any) => TRootAction
+  errAction: (error: any) => TRootAction = ApplicationActions.applicationError
 ) => {
   return Api(
     new ApiClient().withResponseHandler({

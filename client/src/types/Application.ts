@@ -5,7 +5,7 @@ export interface IApplicationData {
   id?: any | null;
   firstName: string;
   lastName: string;
-  birthDate: string;
+  birthDate: Date;
   address: IAddressData;
   vehicles: IVehicleData[];
   published?: boolean;

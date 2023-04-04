@@ -12,6 +12,11 @@ export const APPLICATION_CREATE_SUCCESS = "@data/application/CREATE_SUCCESS";
 export const APPLICATION_UPDATE_REQUEST = "@data/application/UPDATE_REQUEST";
 export const APPLICATION_UPDATE_SUCCESS = "@data/application/UPDATE_SUCCESS";
 
+export const APPLICATION_VALIDATE_REQUEST =
+  "@data/application/VALIDATE_REQUEST";
+export const APPLICATION_VALIDATE_SUCCESS =
+  "@data/application/VALIDATE_SUCCESS";
+
 export const APPLICATION_REQUEST_FAILURE = "@data/application/REQUEST_FAILURE";
 
 export const ApplicationActions = {
@@ -34,8 +39,15 @@ export const ApplicationActions = {
   }>(),
   applicationUpdated: createAction(APPLICATION_UPDATE_SUCCESS)(),
 
+  validateApplication: createAction(APPLICATION_VALIDATE_REQUEST)<{
+    id: string;
+  }>(),
+  applicationValidated: createAction(APPLICATION_VALIDATE_SUCCESS)<{
+    price: number;
+  }>(),
+
   applicationError: createAction(APPLICATION_REQUEST_FAILURE)<{
-    error: unknown;
+    error: string;
   }>(),
 };
 

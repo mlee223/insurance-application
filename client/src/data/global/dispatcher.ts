@@ -12,6 +12,8 @@ export const Dispatcher = (dispatch: Dispatch<any>) => ({
       dispatch(ApplicationActions.createApplication({ data })),
     update: (data: IApplicationData) =>
       dispatch(ApplicationActions.updateApplication({ data })),
+    validate: (id: string) =>
+      dispatch(ApplicationActions.validateApplication({ id })),
   },
 });
 

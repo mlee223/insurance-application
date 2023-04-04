@@ -6,14 +6,8 @@ module.exports = (app) => {
   // Create a new Insuranace Application
   router.post("/", applications.create);
 
-  // Retrieve all Insuranace Applications
-  router.get("/", applications.findAll);
-
-  // Retrieve all published Insuranace Applications
-  router.get("/published", applications.findAllPublished);
-
   // Retrieve a single Insuranace Application with id
-  router.get("/:id", applications.findOne);
+  router.get("/:id", applications.find);
 
   // Update a Insuranace Application with id
   router.put("/:id", applications.update);
@@ -21,8 +15,8 @@ module.exports = (app) => {
   // Delete a Insuranace Application with id
   router.delete("/:id", applications.delete);
 
-  // Delete all Insuranace Applications
-  router.delete("/", applications.deleteAll);
+  // Validate a Insurance Application and Get price quote
+  router.post("/:id/validate", applications.validate);
 
   app.use("/api/applications", router);
 };

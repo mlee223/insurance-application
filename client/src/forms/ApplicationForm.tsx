@@ -1,10 +1,14 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IApplicationData } from "../types/Application";
 import { CustomTextInput } from "../components/CustomTextInput";
 import { useDispatcher } from "../data/global/dispatcher";
 import { ApplicationValidationSchema } from "./validators";
+import {
+  ApplicationSelectors,
+  useStateSelector,
+} from "../data/global/selectors";
 
 export interface IApplicationFormProps {
   data: IApplicationData;
@@ -28,15 +32,21 @@ const ApplicationForm: React.FC<IApplicationFormProps> = ({ data }) => {
     name: "vehicles",
   });
 
-  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-
   const onSubmit = useCallback(
     (data: any) => {
-      setFormSubmitted(false);
       dispatcher.application.update(data);
     },
-    [dispatcher, setFormSubmitted]
+    [dispatcher]
   );
+
+  const { isSubmitted, isValidated, priceQuote } = useStateSelector(
+    (s) => s.application
+  );
+  useEffect(() => {
+    if (isSubmitted && !isValidated) {
+      dispatcher.application.validate(data.id);
+    }
+  }, [data, isSubmitted, isValidated, dispatcher]);
 
   return (
     <div className="submit-form">
@@ -61,6 +71,7 @@ const ApplicationForm: React.FC<IApplicationFormProps> = ({ data }) => {
 
           <div className="form-row">
             <CustomTextInput
+              type="date"
               label="Birth Date"
               name="birthDate"
               register={register}
@@ -134,8 +145,11 @@ const ApplicationForm: React.FC<IApplicationFormProps> = ({ data }) => {
 
           <input type="submit" />
         </form>
-        {Object.keys(errors).length === 0 && formSubmitted && (
+        {isSubmitted && (
           <p className="form-message">You submitted successfully!</p>
+        )}
+        {isValidated && priceQuote && (
+          <p className="price">{`Price Quote: $${priceQuote}`}</p>
         )}
       </div>
     </div>

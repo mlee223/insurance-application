@@ -79,6 +79,10 @@
   color: green;
 }
 
+.price {
+  color: blue;
+}
+
 input[type="submit"] {
   padding: 5px 15px;
   background: #ccc;

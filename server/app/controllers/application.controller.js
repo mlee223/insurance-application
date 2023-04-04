@@ -1,6 +1,5 @@
 const db = require("../models");
 const Application = db.application;
-const Op = db.Sequelize.Op;
 
 // Create and Save a new Insurance Application
 exports.create = (req, res) => {
@@ -16,7 +15,7 @@ exports.create = (req, res) => {
   const application = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    birthDate: req.body.birthDate,
+    birthDate: req.body.birthDate.substring(0, 10),
     address: JSON.stringify(req.body.address),
     vehicles: JSON.stringify(req.body.vehicles),
   };
@@ -35,26 +34,8 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Insurance Applications from the database.
-exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { firstName: { [Op.like]: `%${title}%` } } : null;
-
-  Application.findAll({ where: condition })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Some error occurred while retrieving Insurance Applications.",
-      });
-    });
-};
-
 // Find a single Insurance Application with an id
-exports.findOne = (req, res) => {
+exports.find = (req, res) => {
   const id = req.params.id;
 
   Application.findByPk(id)
@@ -89,7 +70,7 @@ exports.update = (req, res) => {
   const application = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    birthDate: req.body.birthDate,
+    birthDate: req.body.birthDate.substring(0, 10),
     address: JSON.stringify(req.body.address),
     vehicles: JSON.stringify(req.body.vehicles),
   };
@@ -100,6 +81,7 @@ exports.update = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
+          success: true,
           message: "Insurance Application was updated successfully.",
         });
       } else {
@@ -125,6 +107,7 @@ exports.delete = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
+          success: true,
           message: "Insurance Application was deleted successfully!",
         });
       } else {
@@ -140,37 +123,10 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Insurance Applications from the database.
-exports.deleteAll = (req, res) => {
-  Application.destroy({
-    where: {},
-    truncate: false,
-  })
-    .then((nums) => {
-      res.send({
-        message: `${nums} Insurance Applications were deleted successfully!`,
-      });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Some error occurred while removing all Insurance Applications.",
-      });
-    });
-};
+// Validate the Insurance Application and return price
+exports.validate = (req, res) => {
+  const id = req.params.id;
+  // find applicaty by pk and validate
 
-// find all published Insurance Application
-exports.findAllPublished = (req, res) => {
-  Application.findAll({ where: { published: true } })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Some error occurred while retrieving Insurance Applications.",
-      });
-    });
+  res.send({ price: Math.floor(Math.random() * 1000) });
 };

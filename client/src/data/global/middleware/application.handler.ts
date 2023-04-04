@@ -41,6 +41,26 @@ const tryUpdateApplication = async (
   }
 };
 
+const tryValidateApplication = async (
+  state: IRootState,
+  dispatch: Dispatch<TRootAction>,
+  applicationId: string
+) => {
+  const api = ApiProvider(state, dispatch);
+
+  if (api) {
+    const response = await api.validateApplication(applicationId);
+    if (response.price) {
+      dispatch(
+        ApplicationActions.applicationValidated({ price: response.price })
+      );
+    } else {
+    }
+  } else {
+    console.warn("not validating application");
+  }
+};
+
 export const ApplicationMiddleware: Middleware<
   Dispatch<TRootAction>,
   IRootState,
@@ -60,6 +80,10 @@ export const ApplicationMiddleware: Middleware<
         }
         case getType(ApplicationActions.updateApplication): {
           tryUpdateApplication(prevState, dispatch, action.payload.data);
+          break;
+        }
+        case getType(ApplicationActions.validateApplication): {
+          tryValidateApplication(prevState, dispatch, action.payload.id);
           break;
         }
       }

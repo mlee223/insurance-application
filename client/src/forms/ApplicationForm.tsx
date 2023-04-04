@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IApplicationData } from "../types/Application";
@@ -23,14 +23,24 @@ const ApplicationForm: React.FC<IApplicationFormProps> = ({ data }) => {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    mode: "onChange",
+    // mode: "onChange",
     defaultValues: { ...data },
     resolver: yupResolver(ApplicationValidationSchema),
   });
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "vehicles",
   });
+  const handleAppend = useCallback(() => {
+    append({ vin: "", year: "", model: "" });
+  }, [append]);
+  const handleRemove = useCallback(
+    (idx: number) => {
+      remove(idx);
+    },
+    [remove]
+  );
 
   const onSubmit = useCallback(
     (data: any) => {
@@ -140,8 +150,28 @@ const ApplicationForm: React.FC<IApplicationFormProps> = ({ data }) => {
                   errors.vehicles ? errors.vehicles[idx]?.model?.message : ""
                 }
               />
+              <button
+                className="btn btn-light btn-remove"
+                style={{ opacity: idx === 0 ? 0 : 1 }}
+                disabled={idx === 0}
+                onClick={() => handleRemove(idx)}
+              >
+                Remove
+              </button>
             </div>
           ))}
+          <div className="form-row">
+            <button
+              className="btn btn-secondary"
+              style={{ marginRight: 20 }}
+              onClick={handleAppend}
+            >
+              Add Vehicle
+            </button>
+            <div className="form-error">
+              <span>{errors.vehicles?.message}</span>
+            </div>
+          </div>
 
           <input type="submit" />
         </form>

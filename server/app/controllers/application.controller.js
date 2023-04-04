@@ -23,7 +23,7 @@ exports.create = (req, res) => {
   // Save application in the database
   Application.create(application)
     .then((data) => {
-      res.send(data);
+      res.send({ redirect: `http://localhost:8081/applications/${data.id}` });
     })
     .catch((err) => {
       res.status(500).send({

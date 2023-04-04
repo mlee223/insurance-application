@@ -26,7 +26,9 @@ export const CustomTextInput: React.FC<ICustomTextInputProps> = ({
         type={type}
         {...register(name, { required })}
       />
-      <p className="form-error">{error || ""}</p>
+      <div className="form-error">
+        <span>{error || ""}</span>
+      </div>
     </div>
   );
 };

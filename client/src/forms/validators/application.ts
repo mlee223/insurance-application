@@ -96,6 +96,6 @@ export const ApplicationValidationSchema = yup.object().shape({
       })
     )
     .min(1)
-    .max(3)
+    .max(3, "Cannot have more than 3 total")
     .required(),
 });

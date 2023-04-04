@@ -9,11 +9,11 @@ const httpOptions = {
 
 export function Api(api: ApiClient) {
   return {
-    createApplication: async (
-      data: IApplicationData
-    ): Promise<{ redirect: string }> => {
-      return api.post("applications", data, httpOptions);
-    },
+    // createApplication: async (
+    //   data: IApplicationData
+    // ): Promise<{ redirect: string }> => {
+    //   return api.post("applications", data, httpOptions);
+    // },
     retrieveApplication: async (id: string): Promise<IApplicationData> => {
       return api.get(`/applications/${id}`, {}, httpOptions);
     },

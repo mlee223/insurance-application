@@ -8,8 +8,8 @@ export const Dispatcher = (dispatch: Dispatch<any>) => ({
   application: {
     retrieve: (id: string) =>
       dispatch(ApplicationActions.getApplication({ id })),
-    create: (data: IApplicationData) =>
-      dispatch(ApplicationActions.createApplication({ data })),
+    // create: (data: IApplicationData) =>
+    //   dispatch(ApplicationActions.createApplication({ data })),
     update: (data: IApplicationData) =>
       dispatch(ApplicationActions.updateApplication({ data })),
     validate: (id: string) =>

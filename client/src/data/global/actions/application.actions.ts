@@ -6,8 +6,8 @@ export const APPLICATION_RETRIEVE_REQUEST =
 export const APPLICATION_RETRIEVE_SUCCESS =
   "@data/application/RETRIEVE_SUCCESS";
 
-export const APPLICATION_CREATE_REQUEST = "@data/application/CREATE_REQUEST";
-export const APPLICATION_CREATE_SUCCESS = "@data/application/CREATE_SUCCESS";
+// export const APPLICATION_CREATE_REQUEST = "@data/application/CREATE_REQUEST";
+// export const APPLICATION_CREATE_SUCCESS = "@data/application/CREATE_SUCCESS";
 
 export const APPLICATION_UPDATE_REQUEST = "@data/application/UPDATE_REQUEST";
 export const APPLICATION_UPDATE_SUCCESS = "@data/application/UPDATE_SUCCESS";
@@ -27,12 +27,12 @@ export const ApplicationActions = {
     data: IApplicationData;
   }>(),
 
-  createApplication: createAction(APPLICATION_CREATE_REQUEST)<{
-    data: IApplicationData;
-  }>(),
-  applicationCreated: createAction(APPLICATION_CREATE_SUCCESS)<{
-    redirect: URL;
-  }>(),
+  // createApplication: createAction(APPLICATION_CREATE_REQUEST)<{
+  //   data: IApplicationData;
+  // }>(),
+  // applicationCreated: createAction(APPLICATION_CREATE_SUCCESS)<{
+  //   redirect: URL;
+  // }>(),
 
   updateApplication: createAction(APPLICATION_UPDATE_REQUEST)<{
     data: IApplicationData;
